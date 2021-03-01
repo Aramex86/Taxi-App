@@ -1,0 +1,22 @@
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+.container{
+    width: 85%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.errors{
+  color: red;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 10px;
+}
