@@ -14,3 +14,16 @@ export type CrewsType = {
 export type ValuesType = {
   adress: string;
 };
+
+export type OrderType = {
+  source_time: string;
+  addresses: Array<Addresses>;
+  crew_id: number;
+};
+
+type Addresses = {
+  address: string;
+  lat: number;
+  lon: number;
+};
+

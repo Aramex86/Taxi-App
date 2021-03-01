@@ -5,7 +5,7 @@ import SrearchComp from "./Components/SearchComp/SrearchComp";
 import CarlistComp from "./Components/CarsListComp/CarlistComp";
 import BestCar from "./Components/BestCarComp/BestCar";
 import OrderBtn from "./Components/Common/OrderBtn";
-import MapContainer from "./Components/MapComp/Map";
+import MapComp from "./Components/MapComp/Map";
 import Layout from "./Components/HOC/Layout";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -56,7 +56,7 @@ function App() {
       </header>
       <Layout>
         <div className={classes.orederBody}>
-          <MapContainer />
+          <MapComp />
           <CarlistComp />
         </div>
         <BestCar />

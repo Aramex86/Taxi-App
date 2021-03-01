@@ -1,7 +1,10 @@
 import { makeStyles, Theme, createStyles } from "@material-ui/core";
-import React from "react";
+import React, { FC, Provider } from "react";
 import { HiChevronRight } from "react-icons/hi";
+import { useDispatch } from "react-redux";
 import Car from "../../assets/car.png";
+import { getCrew } from "../../Store/Reducers/OrderReducer";
+import { CrewsType } from "../../Types/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,25 +35,39 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       marginBottom: 10,
     },
-    distance: {
-      position: "absolute",
-      right: "6%",
-      bottom: "12%",
+    distanceColor: {
+      display:'flex',
+      justifyContent:'space-between',
+      marginTop:'30px'
     },
   })
 );
 
-const CarCard = () => {
+type PropsType={
+  distance:number,
+  color:string,
+  mark:string,
+  model:string,
+  item:CrewsType
+}
+
+const CarCard:FC<PropsType> = ({distance,mark,model,color,item}) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleCrewSelected = (item: CrewsType) => {
+    dispatch(getCrew(item));
+  };
+
 
   return (
-    <div className={classes.carCard}>
+    <div className={classes.carCard} onClick={()=>handleCrewSelected(item)}>
       <div className={classes.carname}>
         <img src={Car} alt="car" />
-        <span>car name</span>
+        <span>{mark} {model}</span>
       </div>
-      color
-      <p className={classes.distance}>100m</p>
+     
+      <p className={classes.distanceColor}><span>{color}</span> <span>{distance} M</span></p>
       <HiChevronRight />
     </div>
   );

@@ -1,21 +1,24 @@
 import { Dispatch } from "react";
 import { ThunkAction } from "redux-thunk";
-import { CrewsType, ValuesType } from "../../Types/types";
+import { CrewsType, OrderType, ValuesType } from "../../Types/types";
 import { AppStateType } from "../Store";
 
 const GET__CREW = "GET__CREW";
 const GET__ADDRESS = "GET__ADDRESS";
 const GET__ERROR ='GET__ERROR';
+const ORDER = 'ORDER';
+
 
 const initialState = {
-  crew: [] as Array<CrewsType>,
+  crew: {} as CrewsType,
   address: '',
-  error:''
+  error:'',
+  order: {} as OrderType | null,
 };
 
 type InitialStateType = typeof initialState;
 
-type ActionsTypes = GETCREWTYPE | GetAddressType |GetErrorType;
+type ActionsTypes = GETCREWTYPE | GetAddressType |GetErrorType|GetOrderType;
 
 type DispatchType = Dispatch<ActionsTypes>;
 
@@ -43,6 +46,12 @@ const orderReducer = (
         address: action.address,
       };
     }
+    case ORDER:{
+      return{
+        ...state,
+        order:action.order,
+      }
+    }
     case GET__ERROR:{
       return{
         ...state,
@@ -57,10 +66,10 @@ const orderReducer = (
 
 type GETCREWTYPE = {
   type: typeof GET__CREW;
-  crew: Array<CrewsType>;
+  crew: CrewsType;
 };
 
-export const getCrew = (crew: Array<CrewsType>): GETCREWTYPE => {
+export const getCrew = (crew: CrewsType): GETCREWTYPE => {
   return { type: GET__CREW, crew };
 };
 
@@ -80,6 +89,15 @@ type GetErrorType={
 }
 export const getError=(error:string):GetErrorType=>{
   return{type:GET__ERROR,error}
+}
+
+type GetOrderType={
+  type: typeof ORDER,
+  order: OrderType
+}
+
+export const getOrder=(order:OrderType):GetOrderType=>{
+  return{type:ORDER,order}
 }
 
 
