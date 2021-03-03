@@ -7,3 +7,6 @@ export const addressSelector=(state:AppStateType)=>{
 export const errorSelector=(state:AppStateType)=>{
     return state.error;
 }
+export const crewSelector=(state:AppStateType)=>{
+    return state.crew;
+}

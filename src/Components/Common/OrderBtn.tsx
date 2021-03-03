@@ -13,14 +13,16 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     button: {
-      width: "40%",
+      width: "100%",
       margin: "auto",
-      background: "#000",
-      color: "#fff",
-      marginBottom:'50px',
+      background: "#ffe70c",
+      color: "#000",
+      position:'absolute',
+      bottom:0,
+      height:61,
       "&:hover": {
-        backgroundColor: "yellow",
-        color: "#000",
+        backgroundColor: "#000",
+        color: "#ffe70c",
       },
     },
   })
@@ -29,10 +31,17 @@ const useStyles = makeStyles((theme: Theme) =>
 const OrderBtn = () => {
   const classes = useStyles();
   const error = useSelector((state: AppStateType) => errorSelector(state));
-  
+
   return (
-    <Button variant="contained" color="primary" className={classes.button} type='submit' form='my-form' disabled={error?true:false}>
-     Order
+    <Button
+      // variant="contained"
+      color="primary"
+      className={classes.button}
+      type="submit"
+      form="my-form"
+      disabled={error ? true : false}
+    >
+      Order
     </Button>
   );
 };

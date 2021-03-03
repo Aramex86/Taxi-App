@@ -7,27 +7,26 @@ const CrewData = require("../../Data/Crew.json");
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: "30%",
-      outline: "1px solid #242be3",
+      width: "100%",
       display: "flex",
-      alignItems: "center",
-      flexDirection: "column",
+      padding: "0 .5rem",
+      gap: "5px",
+      flexWrap: "wrap",
     },
   })
 );
 
 const CarlistComp = () => {
   const classes = useStyles();
- 
+
   const { data } = CrewData;
-  const { crews_info } = data;
+  const { crews_info }: { crews_info: Array<CrewsType> } = data;
 
-console.log(crews_info);
-
+  const sortItems = crews_info.sort((a, b) => a.distance - b.distance);
 
   return (
     <div className={classes.root}>
-      {crews_info.map((item: CrewsType) => (
+      {sortItems.map((item: CrewsType) => (
         <CarCard
           item={item}
           distance={item.distance}
@@ -36,7 +35,6 @@ console.log(crews_info);
           color={item.car_color}
           key={item.crew_id}
         />
-        
       ))}
     </div>
   );

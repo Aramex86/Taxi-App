@@ -1,7 +1,7 @@
-import { Dispatch } from "react";
-import { ThunkAction } from "redux-thunk";
-import { CrewsType, OrderType, ValuesType } from "../../Types/types";
-import { AppStateType } from "../Store";
+// import { Dispatch } from "react";
+// import { ThunkAction } from "redux-thunk";
+import { CrewsType, OrderType} from "../../Types/types";
+// import { AppStateType } from "../Store";
 
 const GET__CREW = "GET__CREW";
 const GET__ADDRESS = "GET__ADDRESS";
@@ -18,16 +18,16 @@ const initialState = {
 
 type InitialStateType = typeof initialState;
 
-type ActionsTypes = GETCREWTYPE | GetAddressType |GetErrorType|GetOrderType;
+type ActionsTypes = GetCrewType | GetAddressType |GetErrorType|GetOrderType;
 
-type DispatchType = Dispatch<ActionsTypes>;
+// type DispatchType = Dispatch<ActionsTypes>;
 
-type ThunkType = ThunkAction<
-  Promise<void>,
-  AppStateType,
-  unknown,
-  ActionsTypes
->;
+// type ThunkType = ThunkAction<
+//   Promise<void>,
+//   AppStateType,
+//   unknown,
+//   ActionsTypes
+// >;
 
 const orderReducer = (
   state = initialState,
@@ -64,12 +64,12 @@ const orderReducer = (
   }
 };
 
-type GETCREWTYPE = {
+type GetCrewType= {
   type: typeof GET__CREW;
   crew: CrewsType;
 };
 
-export const getCrew = (crew: CrewsType): GETCREWTYPE => {
+export const getCrew = (crew: CrewsType): GetCrewType => {
   return { type: GET__CREW, crew };
 };
 

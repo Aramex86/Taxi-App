@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { AppStateType } from "../../Store/Store";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addressSelector,
+  crewSelector,
   errorSelector,
 } from "../../Store/Selectors/OrderSelector";
-import { getAddress, getError, getOrder } from "../../Store/Reducers/OrderReducer";
-import { OrderType, ValuesType } from "../../Types/types";
+import {
+  getAddress,
+  getError,
+  getOrder,
+} from "../../Store/Reducers/OrderReducer";
+import { OrderType } from "../../Types/types";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,10 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type ErrorsType = {
-  adress: string;
-};
-
 // const validate = (values: ValuesType) => {
 //   const errors = {} as ErrorsType;
 //   if (!values.adress) {
@@ -55,17 +56,38 @@ const SrearchComp = () => {
   // const check = /^(\w| )*[0-9A-Za-z](\w| )*$/;
   const address = useSelector((state: AppStateType) => addressSelector(state));
   const error = useSelector((state: AppStateType) => errorSelector(state));
+  const selectedCrew = useSelector((state: AppStateType) =>
+    crewSelector(state)
+  );
   const dispatch = useDispatch();
 
   const [value, setValue] = useState("");
-  console.log("Selector", address);
-  console.log("Value", value);
-  console.log("Error", error);
+
+  let time = "";
+  const d = new Date();
+  const selectedCrewTime = (
+    year: number,
+    month: number,
+    day: number,
+    hours: number,
+    minutes: number,
+    seconds: number
+  ) => {
+    return (time = `${year}${month}${day}${hours}${minutes}${seconds}`);
+  };
+  selectedCrewTime(
+    d.getFullYear(),
+    d.getMonth(),
+    d.getDay(),
+    d.getHours(),
+    d.getMinutes(),
+    d.getSeconds()
+  );
 
   const handleSubmit = (e: React.FormEvent<any>) => {
     e.preventDefault();
     const form: OrderType = {
-      source_time: "20130101010101",
+      source_time: time,
       addresses: [
         {
           address: address,
@@ -73,17 +95,21 @@ const SrearchComp = () => {
           lon: 53.218803,
         },
       ],
-      crew_id:123
+      crew_id: selectedCrew.crew_id,
     };
 
-    console.log(form);
-    dispatch(getOrder(form));
+    if (form.crew_id === undefined) {
+      dispatch(getError("Please Select the Car"));
+    } else {
+      console.log(form);
+      dispatch(getOrder(form));
+    }
+    setValue("");
   };
 
   const handleChange = (e: React.ChangeEvent<any>) => {
     const value = e.currentTarget.value;
-    if (!value.match(/\d+/) || value === "") {
-      console.log("yes");
+    if (!value.match(/\d+/) || !value) {
       dispatch(getError("Please Enter the address and Nr. of house"));
     } else {
       dispatch(getError(""));

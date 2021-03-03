@@ -1,18 +1,19 @@
 import React from "react";
 import "./Sass/main.scss";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
-import SrearchComp from "./Components/SearchComp/SrearchComp";
 import CarlistComp from "./Components/CarsListComp/CarlistComp";
 import BestCar from "./Components/BestCarComp/BestCar";
-import OrderBtn from "./Components/Common/OrderBtn";
 import MapComp from "./Components/MapComp/Map";
-import Layout from "./Components/HOC/Layout";
+import SrearchComp from "./Components/SearchComp/SrearchComp";
+import OrderBtn from "./Components/Common/OrderBtn";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     app: {
       display: "flex",
       flexDirection: "column",
+      position: "relative",
+      height:'100%',
     },
     header: {
       background: "#000",
@@ -32,13 +33,16 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     orederBody: {
-      // outline:'1px solid red',
-      marginTop: 50,
-      width: "90%",
-      margin: "auto",
-      display: "flex",
-      justifyContent: "space-between",
-      marginBottom: "150px",
+      width: "44%",
+      position: "absolute",
+      background: "#fff",
+      top: "110px",
+      left: "5px",
+      border:'1px solid gray',
+      borderRadius:5,
+      height:'auto',
+      paddingBottom:'4rem',
+
     },
   })
 );
@@ -54,13 +58,13 @@ function App() {
           <li className="menuitem">order</li>
         </ul>
       </header>
-      <Layout>
-        <div className={classes.orederBody}>
-          <MapComp />
-          <CarlistComp />
-        </div>
-        <BestCar />
-      </Layout>
+      <MapComp />
+      <div className={classes.orederBody}>
+        <SrearchComp />
+        <CarlistComp />
+        <OrderBtn />
+      </div>
+      {/*   <BestCar /> */}
     </div>
   );
 }

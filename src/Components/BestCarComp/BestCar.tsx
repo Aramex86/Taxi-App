@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "40%",
-      outline: "1px solid red",
       display: "flex",
       alignItems: "center",
       flexDirection: "column",
       marginBottom: "50px",
       margin: "auto",
+    
       "& div": {
         width: "77%",
       },
@@ -37,12 +37,14 @@ const BestCar = () => {
 
   return (
     <div className={classes.root} onClick={()=>selectBest(best)}>
+      <h3>Best Car</h3>
       <CarCard
         item={best}
-        distance={best.distance}
+        // distance={best.distance}
         mark={best.car_mark}
         model={best.car_model}
         color={best.car_color}
+        number={best.car_number}
       />
     </div>
   );
