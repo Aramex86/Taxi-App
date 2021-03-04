@@ -6,6 +6,9 @@ import BestCar from "./Components/BestCarComp/BestCar";
 import MapComp from "./Components/MapComp/Map";
 import SrearchComp from "./Components/SearchComp/SrearchComp";
 import OrderBtn from "./Components/Common/OrderBtn";
+import {  GeoObjectsSelector } from "./Store/Selectors/OrderSelector";
+import { useSelector } from "react-redux";
+import { AppStateType } from "./Store/Store";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,6 +52,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function App() {
   const classes = useStyles();
+  const geoObject = useSelector((state: AppStateType) =>
+  GeoObjectsSelector(state)
+);
+
+const geoName = geoObject.map(item=> item.GeoObject.name).toString()
+
+console.log(geoName);
   return (
     <div className={classes.app}>
       <header className={classes.header}>
@@ -61,10 +71,10 @@ function App() {
       <MapComp />
       <div className={classes.orederBody}>
         <SrearchComp />
-        <CarlistComp />
+        {geoName !==''?<CarlistComp/>:''}
         <OrderBtn />
       </div>
-      {/*   <BestCar /> */}
+       {/*  <BestCar /> */}
     </div>
   );
 }

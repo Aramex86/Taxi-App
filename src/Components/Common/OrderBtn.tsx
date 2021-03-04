@@ -2,8 +2,8 @@ import React from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
-import { errorSelector } from "../../Store/Selectors/OrderSelector";
 import { AppStateType } from "../../Store/Store";
+import {  errorSelector } from "../../Store/Selectors/OrderSelector";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,7 +34,6 @@ const OrderBtn = () => {
 
   return (
     <Button
-      // variant="contained"
       color="primary"
       className={classes.button}
       type="submit"
