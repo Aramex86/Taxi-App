@@ -35,6 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
         background: "linear-gradient(to right, #ffe70c 65%, #020024 45%)",
         [theme.breakpoints.down("xs")]: {
           background: "linear-gradient(to right, #ffe70c 65%, #020024 42%)",
+          height:50,
         },
       },
       "& .menuitem": {
@@ -59,11 +60,11 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "auto",
       paddingBottom: "9rem",
       [theme.breakpoints.down("xs")]: {
-        bottom: 0,
-        top: "66%",
+        top: 56,
+        left:0,
         width: "100%",
-        left: 0,
-        position:'fixed',
+        paddingBottom: "10rem",
+        height:'auto',
       },
     },
   })
@@ -90,7 +91,7 @@ function App() {
       <div className={classes.orederBody}>
         <SrearchComp />
         {
-          /* geoObject.length === 0 && coords.length === 0 ? "" : */ <CarlistComp />
+          geoObject.length === 0 && coords.length === 0 ? "" : <CarlistComp />
         }
         <OrderBtn />
       </div>

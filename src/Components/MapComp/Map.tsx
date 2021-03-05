@@ -7,7 +7,7 @@ import {
   GeoObjectsSelector,
 } from "../../Store/Selectors/OrderSelector";
 import { AppStateType } from "../../Store/Store";
-import { YMaps, Placemark, Map, ZoomControl } from "react-yandex-maps";
+import { YMaps, Placemark, Map, ZoomControl, FullscreenControl } from "react-yandex-maps";
 import { requestCoords } from "../../Store/Reducers/OrderReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,7 +70,8 @@ console.log(mobile);
           height={"100vh"}
           onClick={clickOnMap}
         >
-          <ZoomControl options={{ position:mobile ===360?{ left: "3%", top: 48}: { right: "3%", top: 260 } }} />
+          <ZoomControl options={{ position:mobile ===360?{ left: "3%", top:345}: { right: "3%", top: 260 } }} />
+          <FullscreenControl options={{ position:mobile ===360?{ right: "3%", bottom:100}: { right: "3%", top: 260 } }}/>
 
           {reverseCoords.length > 0 ? (
             <>

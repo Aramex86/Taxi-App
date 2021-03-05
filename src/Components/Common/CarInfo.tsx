@@ -32,6 +32,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "80%",
       margin: "0 auto",
       marginTop: "50px",
+      [theme.breakpoints.down('sm')]: {
+        marginTop:0,
+      },
+      [theme.breakpoints.down('xs')]: {
+        marginTop:0,
+      },
     },
     button: {
       width: 25,
