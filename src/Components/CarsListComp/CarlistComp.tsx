@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import CarCard from "../Common/CarCard";
 import { CrewsType } from "../../Types/types";
@@ -13,10 +13,13 @@ const useStyles = makeStyles((theme: Theme) =>
       gap: "5px",
       flexWrap: "wrap",
     },
+    
   })
 );
 
-const CarlistComp = () => {
+type PropsType = {};
+
+const CarlistComp: FC<PropsType> = () => {
   const classes = useStyles();
 
   const { data } = CrewData;
@@ -24,7 +27,6 @@ const CarlistComp = () => {
 
   const sortItems = crews_info.sort((a, b) => a.distance - b.distance);
 
-  console.log(sortItems);
   return (
     <div className={classes.root}>
       {sortItems.map((item: CrewsType) => (
@@ -37,7 +39,6 @@ const CarlistComp = () => {
           key={item.crew_id}
         />
       ))}
-      
     </div>
   );
 };

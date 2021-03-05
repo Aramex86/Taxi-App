@@ -1,0 +1,32 @@
+@mixin respond($breakepoit) {
+    @if $breakepoit == small-phone {
+      @media only screen and (max-width: 25em) {
+        @content;
+      } //400
+    }
+    @if $breakepoit == phone {
+      @media only screen and (max-width: 37.5em) {
+        @content;
+      } //600px
+    }
+    @if $breakepoit == tab-port {
+      @media only screen and (max-width: 56.25em) {
+        @content;
+      } //900px
+    }
+    @if $breakepoit == tab-land {
+      @media only screen and (max-width: 75em) {
+        @content;
+      } //1200px
+    }
+    @if $breakepoit == laptop{
+      @media only screen and(min-width:75em) and (max-width:112.5em){
+        @content;
+      }//1200 -1800
+    }
+    @if $breakepoit == big-desktop {
+      @media only screen and (min-width: 112.5em) {
+        @content;
+      } //1800px
+    }
+  }

@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Sass/main.scss";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import CarlistComp from "./Components/CarsListComp/CarlistComp";
-import BestCar from "./Components/BestCarComp/BestCar";
+// import BestCar from "./Components/BestCarComp/BestCar";
 import MapComp from "./Components/MapComp/Map";
 import SrearchComp from "./Components/SearchComp/SrearchComp";
 import OrderBtn from "./Components/Common/OrderBtn";
-import {  GeoObjectsSelector } from "./Store/Selectors/OrderSelector";
+import {
+  coordsSelector,
+  GeoObjectsSelector,
+  toggleSelector,
+} from "./Store/Selectors/OrderSelector";
 import { useSelector } from "react-redux";
 import { AppStateType } from "./Store/Store";
+import CarInfo from "./Components/Common/CarInfo";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       position: "relative",
-      height:'100%',
+      height: "100vh",
     },
     header: {
       background: "#000",
@@ -28,11 +33,19 @@ const useStyles = makeStyles((theme: Theme) =>
         alignItems: "center",
         padding: "0 3rem",
         background: "linear-gradient(to right, #ffe70c 65%, #020024 45%)",
+        [theme.breakpoints.down("xs")]: {
+          background: "linear-gradient(to right, #ffe70c 65%, #020024 42%)",
+        },
       },
       "& .menuitem": {
         padding: "1rem",
         textTransform: "Capitalize",
         fontWeight: "bold",
+        [theme.breakpoints.down("xs")]: {
+          "&:last-child": {
+            color: "#fff",
+          },
+        },
       },
     },
     orederBody: {
@@ -41,11 +54,16 @@ const useStyles = makeStyles((theme: Theme) =>
       background: "#fff",
       top: "110px",
       left: "5px",
-      border:'1px solid gray',
-      borderRadius:5,
-      height:'auto',
-      paddingBottom:'4rem',
-
+      border: "1px solid gray",
+      borderRadius: 5,
+      height: "auto",
+      paddingBottom: "9rem",
+      [theme.breakpoints.down("sm")]: {
+        bottom: 0,
+        top: "66%",
+        width: "100%",
+        left: 0,
+      },
     },
   })
 );
@@ -53,12 +71,11 @@ const useStyles = makeStyles((theme: Theme) =>
 function App() {
   const classes = useStyles();
   const geoObject = useSelector((state: AppStateType) =>
-  GeoObjectsSelector(state)
-);
+    GeoObjectsSelector(state)
+  );
+  const toogle = useSelector((state: AppStateType) => toggleSelector(state));
+  const coords = useSelector((state: AppStateType) => coordsSelector(state));
 
-const geoName = geoObject.map(item=> item.GeoObject.name).toString()
-
-console.log(geoName);
   return (
     <div className={classes.app}>
       <header className={classes.header}>
@@ -71,10 +88,12 @@ console.log(geoName);
       <MapComp />
       <div className={classes.orederBody}>
         <SrearchComp />
-        {geoName !==''?<CarlistComp/>:''}
+        {
+          /* geoObject.length === 0 && coords.length === 0 ? "" : */ <CarlistComp />
+        }
         <OrderBtn />
       </div>
-       {/*  <BestCar /> */}
+      {toogle ? <CarInfo /> : ""}
     </div>
   );
 }

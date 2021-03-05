@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { AppStateType } from "../../Store/Store";
@@ -7,12 +7,12 @@ import {
   addressSelector,
   coordsSelector,
   crewSelector,
-  errorSelector,
   GeoObjectsSelector,
 } from "../../Store/Selectors/OrderSelector";
 import {
   getAddress,
-  getError,
+  getCoords,
+  getGeoObject,
   getOrder,
   getSearchCord,
 } from "../../Store/Reducers/OrderReducer";
@@ -33,44 +33,39 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "25px",
       "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: "#e2e868",
+        fontSize:'1.5rem',
       },
       "& .MuiFormLabel-root.Mui-focused": {
         color: "#000",
         fontWeight: "bold",
+        fontSize:'1.5rem',
       },
+      '& .MuiFormLabel-root':{
+        fontSize:'1.5rem',
+      },
+      "& palceholder":{
+        fontSize:'1.5rem',
+      }
     },
   })
 );
 
-// const validate = (values: ValuesType) => {
-//   const errors = {} as ErrorsType;
-//   if (!values.adress) {
-//     console.log("error!");
-//     errors.adress = "Please enter street and house nr.";
-//   } else if (!/\d/.test(values.adress)) {
-//     console.log("error number!");
-//     errors.adress = "Enter House Nr.";
-//   }
-//   return errors;
-// };
-
 const SrearchComp = () => {
   const classes = useStyles();
-  // const check = /^(\w| )*[0-9A-Za-z](\w| )*$/;
   const address = useSelector((state: AppStateType) => addressSelector(state));
   const geoObject = useSelector((state: AppStateType) =>
     GeoObjectsSelector(state)
   );
-  const error = useSelector((state: AppStateType) => errorSelector(state));
+
   const coords = useSelector((state: AppStateType) => coordsSelector(state));
   const selectedCrew = useSelector((state: AppStateType) =>
     crewSelector(state)
   );
   const dispatch = useDispatch();
 
-  const [value, setValue] = useState("");
-
-  // console.log(coords);
+  const [value, setValue] = useState<string>("");
+  const [carError, setCarError] = useState<string>("");
+  const [addressError, setAddressError] = useState<string>("");
 
   useEffect(() => {
     const nameArr = coords.map((item) => item.GeoObject.name);
@@ -112,8 +107,6 @@ const SrearchComp = () => {
 
   const [lat, long] = extractCoords;
 
-  // console.log(lat,long);
-
   const handleSubmit = (e: React.FormEvent<any>) => {
     e.preventDefault();
     const orderForm: OrderType = {
@@ -125,28 +118,36 @@ const SrearchComp = () => {
           lon: long,
         },
       ],
-      crew_id: selectedCrew.crew_id,
+      crew_id: selectedCrew?.crew_id,
     };
+
     if (orderForm.crew_id === undefined) {
-      dispatch(getError("Please Select car"));
-    } else if (orderForm.crew_id === selectedCrew.crew_id) {
+      setCarError("Please Select car");
+    } else if (orderForm.crew_id === selectedCrew?.crew_id) {
+      let geoCopy = [...geoObject];
+      geoCopy = [];
+      let coordsCopy = [...coords];
+      coordsCopy = [];
+      dispatch(getGeoObject(geoCopy));
+      dispatch(getCoords(coordsCopy));
       dispatch(getOrder(orderForm));
+      setCarError("");
     }
     console.log(orderForm);
   };
 
+  console.log(coords);
   const handleChange = (e: React.ChangeEvent<any>) => {
     const value = e.currentTarget.value;
-    if (!value.match(/\d+/) || !value) {
-      dispatch(getError("Please Enter the address and Nr. of house"));
+    if (value.match(/\d+/g) || !value) {
+      setAddressError("");
     } else {
-      dispatch(getError(""));
+      setAddressError("Please Enter the address and Nr. of house");
     }
     setValue(value);
     dispatch(getAddress(value));
   };
 
-  // console.log(geoObject);
   return (
     <div className="container">
       <form onSubmit={handleSubmit} className={classes.form} id="my-form">
@@ -159,11 +160,11 @@ const SrearchComp = () => {
           placeholder="Street,house nr...."
           name="adress"
           onChange={handleChange}
-          value={address}
+          value={coords.length > 0 || geoObject.length > 0 ? address : value}
           required
         />
-        {error ? <div className="errors">{error}</div> : ""}
-        {/* {value !=='' && geoObject? "":<div className="errors">Enter Valid Address</div>} */}
+        {addressError ? <div className="errors">{addressError}</div> : ""}
+        {carError ? <div className="errors">{carError}</div> : ""}
       </form>
     </div>
   );

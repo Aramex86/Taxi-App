@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       position:'absolute',
       bottom:0,
       height:61,
+      fontSize:'1.5rem',
       "&:hover": {
         backgroundColor: "#000",
         color: "#ffe70c",

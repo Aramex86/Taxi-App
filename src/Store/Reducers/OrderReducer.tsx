@@ -1,16 +1,8 @@
-// import { Dispatch } from "react";
-// import { ThunkAction } from "redux-thunk";
 import { Dispatch } from "react";
 import { ThunkAction } from "redux-thunk";
 import { getSearch } from "../../Components/Api/api";
-import {
-  CrewsType,
-  // GeoObjectType,
-  ObjectType,
-  OrderType,
-} from "../../Types/types";
+import { CrewsType, ObjectType, OrderType } from "../../Types/types";
 import { AppStateType } from "../Store";
-// import { AppStateType } from "../Store";
 
 const GET__CREW = "GET__CREW";
 const GET__ADDRESS = "GET__ADDRESS";
@@ -18,14 +10,16 @@ const GET__ERROR = "GET__ERROR";
 const ORDER = "ORDER";
 const GET__GEOOBJECTTYPE = "GET__GEOOBJECTTYPE";
 const GET__CORDS = "GET__CORDS";
+const TOOGGLE__INFO = "TOOGGLE__INFO";
 
 const initialState = {
-  crew: {} as CrewsType,
+  crew: {} as CrewsType | null,
   address: "",
   error: "",
   order: {} as OrderType | null,
   geoObject: [] as Array<ObjectType>,
   coords: [] as Array<ObjectType>,
+  tooggleInfo: false,
 };
 
 type InitialStateType = typeof initialState;
@@ -36,7 +30,8 @@ type ActionsTypes =
   | GetErrorType
   | GetOrderType
   | GetGeoObjectTypeType
-  | GetCoordsType;
+  | GetCoordsType
+  | ToogleInfoType;
 
 type DispatchType = Dispatch<ActionsTypes>;
 
@@ -79,13 +74,25 @@ const orderReducer = (
     case GET__GEOOBJECTTYPE: {
       return {
         ...state,
-        geoObject: [...action.geoObject].slice(0, 1),
+        geoObject:
+          [...action.geoObject].length === 1
+            ? [...action.geoObject]
+            : [...action.geoObject].slice(0, 1),
       };
     }
     case GET__CORDS: {
       return {
         ...state,
-        coords: [...action.coords].slice(0, 1),
+        coords:
+          [...action.coords].length > 1
+            ? [...action.coords]
+            : [...action.coords].slice(0, 1),
+      };
+    }
+    case TOOGGLE__INFO: {
+      return {
+        ...state,
+        tooggleInfo: action.tooggleInfo,
       };
     }
 
@@ -148,6 +155,14 @@ type GetCoordsType = {
 export const getCoords = (coords: Array<ObjectType>): GetCoordsType => {
   return { type: GET__CORDS, coords };
 };
+type ToogleInfoType = {
+  type: typeof TOOGGLE__INFO;
+  tooggleInfo: boolean;
+};
+
+export const toogleInfo = (tooggleInfo: boolean): ToogleInfoType => {
+  return { type: TOOGGLE__INFO, tooggleInfo };
+};
 
 export const getSearchCord = (value: string): ThunkType => async (
   dispatch: DispatchType
@@ -163,4 +178,3 @@ export const requestCoords = (coords: string): ThunkType => async (
 };
 
 export default orderReducer;
-
