@@ -18,6 +18,14 @@ const useStyles = makeStyles((theme: Theme) =>
       background: "#ffff",
       top: "100px",
       width: "30%",
+      [theme.breakpoints.down('sm')]: {
+        width:'36%',
+        height:'40vh',
+      },
+      [theme.breakpoints.down('xs')]: {
+        width:'55%',
+        height:'32vh',
+      },
     },
     list: {
       listStyle: "none",
@@ -39,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
 const CarInfo = () => {
   const classes = useStyles();
   const dispatch = useDispatch();

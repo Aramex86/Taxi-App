@@ -58,11 +58,12 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: 5,
       height: "auto",
       paddingBottom: "9rem",
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down("xs")]: {
         bottom: 0,
         top: "66%",
         width: "100%",
         left: 0,
+        position:'fixed',
       },
     },
   })
