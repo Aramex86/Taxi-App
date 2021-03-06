@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: 200,
+      "& .MuiInputBase-root": {
+        fontSize: "1.5rem",
+      },
     },
     form: {
       width: "80%",
@@ -33,19 +36,23 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "25px",
       "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
         borderColor: "#e2e868",
-        fontSize:'1.5rem',
+        fontSize: "1.5rem",
+      },
+      "& .MuiOutlinedInput-inputMarginDense":{
+        paddingTop:'12.5px',
+        paddingBottom:'12.5px',
       },
       "& .MuiFormLabel-root.Mui-focused": {
         color: "#000",
         fontWeight: "bold",
-        fontSize:'1.5rem',
+        fontSize: "1.5rem",
       },
-      '& .MuiFormLabel-root':{
-        fontSize:'1.5rem',
+      "& .MuiFormLabel-root": {
+        fontSize: "1.5rem",
       },
-      "& palceholder":{
-        fontSize:'1.5rem',
-      }
+      "& palceholder": {
+        fontSize: "1.5rem",
+      },
     },
   })
 );
@@ -132,11 +139,12 @@ const SrearchComp = () => {
       dispatch(getCoords(coordsCopy));
       dispatch(getOrder(orderForm));
       setCarError("");
+      setValue("");
+    } else {
     }
     console.log(orderForm);
   };
 
-  console.log(coords);
   const handleChange = (e: React.ChangeEvent<any>) => {
     const value = e.currentTarget.value;
     if (value.match(/\d+/g) || !value) {

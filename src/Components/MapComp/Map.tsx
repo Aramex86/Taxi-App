@@ -51,7 +51,6 @@ const MapComp = () => {
   const addDistanceMore = [lat, long + more];
 
   const mobile = window.innerWidth
-console.log(mobile);
   return (
     <div className={classes.root}>
       <YMaps

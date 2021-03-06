@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Sass/main.scss";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import CarlistComp from "./Components/CarsListComp/CarlistComp";
-// import BestCar from "./Components/BestCarComp/BestCar";
 import MapComp from "./Components/MapComp/Map";
 import SrearchComp from "./Components/SearchComp/SrearchComp";
 import OrderBtn from "./Components/Common/OrderBtn";

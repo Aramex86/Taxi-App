@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('xs')]: {
         width:'55%',
         height:'32vh',
+        left:'0',
+        bottom:'174px',
+        top:'300px',
       },
     },
     list: {
