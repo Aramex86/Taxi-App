@@ -21,3 +21,6 @@ export const orderSelector = (state: AppStateType) => {
 export const toggleSelector = (state: AppStateType) => {
   return state.tooggleInfo;
 };
+export const serachSelector = (state: AppStateType) => {
+  return state.cardSearchToggle;
+};

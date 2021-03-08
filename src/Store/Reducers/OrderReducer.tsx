@@ -11,6 +11,7 @@ const ORDER = "ORDER";
 const GET__GEOOBJECTTYPE = "GET__GEOOBJECTTYPE";
 const GET__CORDS = "GET__CORDS";
 const TOOGGLE__INFO = "TOOGGLE__INFO";
+const CAR__SEARCH = "CAR__SEARCH";
 
 const initialState = {
   crew: {} as CrewsType | null,
@@ -20,6 +21,7 @@ const initialState = {
   geoObject: [] as Array<ObjectType>,
   coords: [] as Array<ObjectType>,
   tooggleInfo: false,
+  cardSearchToggle: false,
 };
 
 type InitialStateType = typeof initialState;
@@ -31,7 +33,8 @@ type ActionsTypes =
   | GetOrderType
   | GetGeoObjectTypeType
   | GetCoordsType
-  | ToogleInfoType;
+  | ToogleInfoType
+  | CardSearchToggleType;
 
 type DispatchType = Dispatch<ActionsTypes>;
 
@@ -93,6 +96,12 @@ const orderReducer = (
       return {
         ...state,
         tooggleInfo: action.tooggleInfo,
+      };
+    }
+    case CAR__SEARCH: {
+      return {
+        ...state,
+        cardSearchToggle: action.cardSearchToggle,
       };
     }
 
@@ -164,6 +173,17 @@ export const toogleInfo = (tooggleInfo: boolean): ToogleInfoType => {
   return { type: TOOGGLE__INFO, tooggleInfo };
 };
 
+type CardSearchToggleType = {
+  type: typeof CAR__SEARCH;
+  cardSearchToggle: boolean;
+};
+
+export const cardSearchToggle = (
+  cardSearchToggle: boolean
+): CardSearchToggleType => {
+  return { type: CAR__SEARCH, cardSearchToggle };
+};
+
 export const getSearchCord = (value: string): ThunkType => async (
   dispatch: DispatchType
 ) => {
@@ -175,6 +195,11 @@ export const requestCoords = (coords: string): ThunkType => async (
 ) => {
   const res = await getSearch.getCoords(coords);
   dispatch(getCoords(res));
+};
+export const serachDelay = (): ThunkType => async (dispatch: DispatchType) => {
+  setTimeout(() => {
+    dispatch(cardSearchToggle(true));
+  }, 3000);
 };
 
 export default orderReducer;

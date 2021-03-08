@@ -12,9 +12,11 @@ import {
 import {
   getAddress,
   getCoords,
+  getCrew,
   getGeoObject,
   getOrder,
   getSearchCord,
+  serachDelay,
 } from "../../Store/Reducers/OrderReducer";
 import { OrderType } from "../../Types/types";
 
@@ -73,6 +75,7 @@ const SrearchComp = () => {
   const [value, setValue] = useState<string>("");
   const [carError, setCarError] = useState<string>("");
   const [addressError, setAddressError] = useState<string>("");
+  
 
   useEffect(() => {
     const nameArr = coords.map((item) => item.GeoObject.name);
@@ -127,17 +130,21 @@ const SrearchComp = () => {
       ],
       crew_id: selectedCrew?.crew_id,
     };
-
-    if (orderForm.crew_id === undefined) {
+    
+    if (orderForm.crew_id === undefined || 0) {
       setCarError("Please Select car");
     } else if (orderForm.crew_id === selectedCrew?.crew_id) {
       let geoCopy = [...geoObject];
       geoCopy = [];
       let coordsCopy = [...coords];
       coordsCopy = [];
+      let orderFormCopy=Object.assign(orderForm)
+      orderFormCopy = {}
+      console.log(orderFormCopy);
       dispatch(getGeoObject(geoCopy));
       dispatch(getCoords(coordsCopy));
       dispatch(getOrder(orderForm));
+      dispatch(getCrew(orderFormCopy));
       setCarError("");
       setValue("");
     } else {
@@ -149,6 +156,7 @@ const SrearchComp = () => {
     const value = e.currentTarget.value;
     if (value.match(/\d+/g) || !value) {
       setAddressError("");
+      dispatch(serachDelay())
     } else {
       setAddressError("Please Enter the address and Nr. of house");
     }

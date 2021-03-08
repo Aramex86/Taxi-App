@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import CarCard from "../Common/CarCard";
 import { CrewsType } from "../../Types/types";
@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
       gap: "5px",
       flexWrap: "wrap",
     },
-    
   })
 );
 
