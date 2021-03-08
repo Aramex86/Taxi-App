@@ -7,8 +7,14 @@ import {
   GeoObjectsSelector,
 } from "../../Store/Selectors/OrderSelector";
 import { AppStateType } from "../../Store/Store";
-import { YMaps, Placemark, Map, ZoomControl, FullscreenControl } from "react-yandex-maps";
-import { requestCoords } from "../../Store/Reducers/OrderReducer";
+import {
+  YMaps,
+  Placemark,
+  Map,
+  ZoomControl,
+  FullscreenControl,
+} from "react-yandex-maps";
+import { requestCoords, serachDelay } from "../../Store/Reducers/OrderReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,6 +47,7 @@ const MapComp = () => {
     const tostirng = clickCoords.map((item) => String(item));
     const [lat, long] = tostirng;
     dispatch(requestCoords(`${long},${lat}`));
+    dispatch(serachDelay());
   };
 
   const best = 0.003;
@@ -50,7 +57,7 @@ const MapComp = () => {
   const addDistanceBest = [lat + best, long];
   const addDistanceMore = [lat, long + more];
 
-  const mobile = window.innerWidth
+  const mobile = window.innerWidth;
   return (
     <div className={classes.root}>
       <YMaps
@@ -69,8 +76,22 @@ const MapComp = () => {
           height={"100vh"}
           onClick={clickOnMap}
         >
-          <ZoomControl options={{ position:mobile ===360?{ left: "3%", top:345}: { right: "3%", top: 260 } }} />
-          <FullscreenControl options={{ position:mobile ===360?{ right: "3%", bottom:100}: { right: "3%", top: 260 } }}/>
+          <ZoomControl
+            options={{
+              position:
+                mobile === 360
+                  ? { left: "3%", top: 345 }
+                  : { right: "3%", top: 260 },
+            }}
+          />
+          <FullscreenControl
+            options={{
+              position:
+                mobile === 360
+                  ? { right: "3%", bottom: 100 }
+                  : { right: "3%", top: 260 },
+            }}
+          />
 
           {reverseCoords.length > 0 ? (
             <>

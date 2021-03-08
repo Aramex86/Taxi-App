@@ -114,11 +114,7 @@ const CarCard: FC<PropsType> = ({
     dispatch(toogleInfo(true))
   }
 
-  // console.log(crewInfo1);
-  // console.log(crewInfo2);
 
-
-  console.log(toogle)
 
   return (
     <>

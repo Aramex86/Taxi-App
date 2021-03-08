@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     progress: {
       position: "absolute",
-      left: "110%",
+      left: "calc(100% - 50%)",
       top: "250%",
       zIndex: 3,
       color: "#000",
@@ -90,7 +90,13 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       [theme.breakpoints.down("xs")]: {
         width: "150px",
-        left: "30%",
+        left: "50%",
+        // top:'50%',
+        transform:'translate(-50%,-50%)',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
+        justifyContent:'center',
       },
 
       "& .MuiCircularProgress-colorPrimary": {
@@ -120,7 +126,6 @@ function App() {
     );
   };
 
-  console.log(carSearch);
   return (
     <div className={classes.app}>
       <header className={classes.header}>
