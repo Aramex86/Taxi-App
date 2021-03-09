@@ -198,7 +198,7 @@ export const requestCoords = (coords: string): ThunkType => async (
 };
 export const serachDelay = (): ThunkType => async (dispatch: DispatchType) => {
   setTimeout(() => {
-    dispatch(cardSearchToggle(true));
+    dispatch(cardSearchToggle(false));
   }, 3000);
 };
 

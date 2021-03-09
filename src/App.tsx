@@ -16,6 +16,11 @@ import { AppStateType } from "./Store/Store";
 import CarInfo from "./Components/Common/CarInfo";
 import { CircularProgress } from "@material-ui/core";
 
+
+
+const screenWhidth = window.innerWidth;
+const screenHeight = window.innerHeight;
+console.log(screenWhidth);
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     app: {
@@ -71,19 +76,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     progress: {
       position: "absolute",
-      left: "calc(100% - 50%)",
-      top: "250%",
+      left: `calc(${screenWhidth}px - 160%)`,
+      top: `calc(${screenHeight}px - 250%)`,
       zIndex: 3,
       color: "#000",
-      width: "150px",
-      textAlign: "center",
+      width: "100%",
+      display:'flex',
+      flexDirection:'column',
+      alignItems:'center',
+      justifyContent:'center',
       fontWeight: 700,
-      [theme.breakpoints.down("xl")]: {
-        width: "155px",
-      },
-      [theme.breakpoints.down("md")]: {
-        width: "150px",
-      },
       [theme.breakpoints.down("sm")]: {
         width: "150px",
         left: "88%",
@@ -91,7 +93,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down("xs")]: {
         width: "150px",
         left: "50%",
-        // top:'50%',
+         top:'180%',
         transform:'translate(-50%,-50%)',
         display:'flex',
         flexDirection:'column',
@@ -106,6 +108,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+
+
 function App() {
   const classes = useStyles();
   const geoObject = useSelector((state: AppStateType) =>
@@ -115,16 +119,6 @@ function App() {
   const coords = useSelector((state: AppStateType) => coordsSelector(state));
   const carSearch = useSelector((state: AppStateType) => serachSelector(state));
 
-  const searchCarDelay = () => {
-    return carSearch ? (
-      <CarlistComp />
-    ) : (
-      <div className={classes.progress}>
-        Searching Crars...
-        <CircularProgress thickness={5} size={50} />
-      </div>
-    );
-  };
 
   return (
     <div className={classes.app}>
@@ -138,7 +132,10 @@ function App() {
       <MapComp />
       <div className={classes.orederBody}>
         <SrearchComp />
-        {geoObject.length === 0 && coords.length === 0 ? "" : searchCarDelay()}
+        {geoObject.length === 0 && coords.length === 0 ?"": carSearch?<CarlistComp/>:<div className={classes.progress}>
+        Searching Crars...
+        <CircularProgress thickness={5} size={50} />
+      </div>}
         <OrderBtn />
       </div>
       {toogle ? <CarInfo /> : ""}
