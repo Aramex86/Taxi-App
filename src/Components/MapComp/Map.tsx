@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       width: "100%",
-       height: "100vh",
+      height: "100vh",
     },
   })
 );
@@ -32,7 +32,7 @@ const MapComp = () => {
   );
   const coords = useSelector((state: AppStateType) => coordsSelector(state));
   const dispatch = useDispatch();
-  const [coordinatess, setCoordinates] = useState([56.839439, 53.218803]);
+  const [coordinatess, setCoordinates] = useState<Array<number>>([]);
   const [clickCoords, setClickCoords] = useState<Array<number>>([]);
   const zoom = 12;
   const palceCoords = geoObject.map((coords) => coords.GeoObject.Point.pos);
@@ -49,6 +49,14 @@ const MapComp = () => {
     dispatch(requestCoords(`${long},${lat}`));
     dispatch(serachDelay());
   };
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      const coords = [latitude, longitude];
+      setCoordinates(coords);
+    });
+  }, []);
 
   const best = 0.003;
   const more = 0.006;
